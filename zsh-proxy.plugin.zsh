@@ -102,14 +102,14 @@ __config_proxy() {
 		__read_git_proxy_type="socks5"
 	fi
 
-	echo "http://${__read_http}" >"${ZDOTDIR:-${HOME}}/.zsh-proxy/http"
+	echo "http://${__read_http}" >|"${ZDOTDIR:-${HOME}}/.zsh-proxy/http"
 	if [ "${__read_socks5_type}" = "2" ]; then
-		echo "socks5h://${__read_socks5}" >"${ZDOTDIR:-${HOME}}/.zsh-proxy/socks5"
+		echo "socks5h://${__read_socks5}" >|"${ZDOTDIR:-${HOME}}/.zsh-proxy/socks5"
 	else
-		echo "socks5://${__read_socks5}" >"${ZDOTDIR:-${HOME}}/.zsh-proxy/socks5"
+		echo "socks5://${__read_socks5}" >|"${ZDOTDIR:-${HOME}}/.zsh-proxy/socks5"
 	fi
-	echo "${__read_no_proxy}" >"${ZDOTDIR:-${HOME}}/.zsh-proxy/no_proxy"
-	echo "${__read_git_proxy_type}" >"${ZDOTDIR:-${HOME}}/.zsh-proxy/git_proxy_type"
+	echo "${__read_no_proxy}" >|"${ZDOTDIR:-${HOME}}/.zsh-proxy/no_proxy"
+	echo "${__read_git_proxy_type}" >|"${ZDOTDIR:-${HOME}}/.zsh-proxy/git_proxy_type"
 
 	__read_proxy_config
 }
@@ -290,7 +290,7 @@ __zsh_proxy_update() {
 init_proxy() {
 	mkdir -p "${ZDOTDIR:-${HOME}}/.zsh-proxy"
 	touch "${ZDOTDIR:-${HOME}}/.zsh-proxy/status"
-	echo "0" >"${ZDOTDIR:-${HOME}}/.zsh-proxy/status"
+	echo "0" >|"${ZDOTDIR:-${HOME}}/.zsh-proxy/status"
 	touch "${ZDOTDIR:-${HOME}}/.zsh-proxy/http"
 	touch "${ZDOTDIR:-${HOME}}/.zsh-proxy/socks5"
 	touch "${ZDOTDIR:-${HOME}}/.zsh-proxy/no_proxy"
@@ -317,13 +317,13 @@ config_proxy() {
 }
 
 proxy() {
-	echo "1" >"${ZDOTDIR:-${HOME}}/.zsh-proxy/status"
+	echo "1" >|"${ZDOTDIR:-${HOME}}/.zsh-proxy/status"
 	__enable_proxy
 	__check_ip
 }
 
 noproxy() {
-	echo "0" >"${ZDOTDIR:-${HOME}}/.zsh-proxy/status"
+	echo "0" >|"${ZDOTDIR:-${HOME}}/.zsh-proxy/status"
 	__disable_proxy
 	__check_ip
 }
